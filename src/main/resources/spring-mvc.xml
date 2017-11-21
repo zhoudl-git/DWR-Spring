@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"	
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"	
+xmlns:p="http://www.springframework.org/schema/p"	
+xmlns:context="http://www.springframework.org/schema/context" 
+xmlns:mvc="http://www.springframework.org/schema/mvc"
+xmlns:util="http://www.springframework.org/schema/util"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+    http://www.springframework.org/schema/mvc 
+    http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+    http://www.springframework.org/schema/util
+    http://www.springframework.org/schema/util/spring-util-3.0.xsd"
+    default-lazy-init="true">
+    
+    <!--开启springmvc注解模式--> 
+    <!--简化配置： (1)主动注册DefaultAnnotationHandlerMapping,AnnotationMethodHandlerAdapter 
+    (2)提供一系列功能：数据绑定，数字和日期的format @NumberFormt @DataTimeFormat，xml json默认的读写支持-->
+    <mvc:annotation-driven/>
+    <!--静态资源默认的servlet配置，（1）允许对静态资源的处理：js,gif,css,html等（2）允许使用“/”做整体映射--> 
+    <!-- 容器默认的DefaultServletHandler处理 所有静态内容与无RequestMapping处理的URL-->
+    <!-- <mvc:default-servlet-handler /> -->
+	<!-- 启动事务添加配置 -->
+    <context:component-scan base-package="tk.ljyuan71">  
+        <!-- 排除扫描service标签 -->
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>   
+    </context:component-scan>  
+	<!--使用Jackson 2.x的配置，需要导入的jar包：jackson-core-xxx.jar、jackson-annotations-xxx.jar、jackson-databind-xxx.jar -->
+    <!--通过处理器映射DefaultAnnotationHandlerMapping来开启支持@Controller注解 -->
+    <bean
+        class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+    <!--通过处理器适配器AnnotationMethodHandlerAdapter来开启支持@RequestMapping注解 -->
+    <bean
+        class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <!-- 设置返回字符串编码 -->
+                <bean
+                    class="org.springframework.http.converter.StringHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/html;charset=UTF-8</value>
+                            <value>application/json;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+                <!-- json转换器 -->
+                <bean
+                    class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/html;charset=UTF-8</value>
+                            <value>application/json;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    <!-- 视图解析器  当Controller返回一个ModelAndView时，配置的jsp解析将其中的view路径添加前缀和后缀-->
+    <!-- 为了安全，WEB-INF下的jsp是不对外可见的，只能forward能访问到 -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+		<property name="prefix" value="/WEB-INF/views/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+
+    <!-- 当配置了<mvc:annotation-driven/>后，会自动加载org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping和org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter，所以如果显示的配置则需去掉配置<mvc:annotation-driven/> -->
+	<!--<mvc:annotation-driven/>-->
+</beans>
