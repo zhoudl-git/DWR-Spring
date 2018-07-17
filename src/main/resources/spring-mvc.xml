@@ -23,7 +23,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
     <!-- 容器默认的DefaultServletHandler处理 所有静态内容与无RequestMapping处理的URL-->
     <!-- <mvc:default-servlet-handler /> -->
 	<!-- 启动事务添加配置 -->
-    <context:component-scan base-package="tk.ljyuan71">  
+    <context:component-scan base-package="top.zhoudl">
         <!-- 排除扫描service标签 -->
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>   
     </context:component-scan>  

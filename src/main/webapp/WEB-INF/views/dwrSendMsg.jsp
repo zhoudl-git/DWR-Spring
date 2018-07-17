@@ -23,7 +23,7 @@
 	//通过dwr直接调用
 	function send(userId){
 		var msg = $("#msg").val();
-		//sendMessage对应后台dwr.xml中对应param的类的方法tk.ljyuan71.dwr.MessagePusher.sendMessage
+		//sendMessage对应后台dwr.xml中对应param的类的方法top.zhoudl.dwr.MessagePusher.sendMessage
 		if (!userId || !msg) return;
 		MessagePusher.sendMessage(userId,msg);
 	}
@@ -34,7 +34,7 @@
 			type:'post',
 			contentType:'application/json',
 			date:{"userId":"0"},
-			url:'/SpringMVC-Dwr/web/update.do',
+			url:'<%=request.getContextPath() %>/web/update.do',
 			success:function(data){
 				if(date.SUCCESS == '200'){
 					alert("更新并发送消息成功!");

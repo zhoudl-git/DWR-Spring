@@ -1,21 +1,18 @@
-package tk.ljyuan71.web.controller;
+package top.zhoudl.web.controller;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import tk.ljyuan71.dwr.MessagePusher;
-import tk.ljyuan71.dwr.User;
+import top.zhoudl.dwr.MessagePusher;
 
 @Controller
 @RequestMapping("/web")
@@ -27,7 +24,7 @@ public class SpringController {
 	public String springWeb(HttpServletRequest request,HttpServletResponse response){
 		log.info("=======进入了SpringController的springWeb方法=======");
 		
-		return "Hello World,Hello ljyuan71!";
+		return "Hello World 访问到了";
 	}
 	
 	@RequestMapping("/viewResolver")
